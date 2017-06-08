@@ -4,11 +4,12 @@ using namespace std;
 
 class Tree {
     private:
-        struct TreeNode {
+
+        typedef struct TreeNode {
             TreeNode* left;
             TreeNode* right;
             int data;
-        }
+        } TreeNode;
 
         TreeNode* root;
 
@@ -16,9 +17,14 @@ class Tree {
         Tree() { root = NULL; }
 
         bool isEmpty() const { return root == NULL; }
-        void inorderPrint();
-        void postorderPrint();
-        void 
+        void inOrderPrint();
+        void postOrderPrint();
+        void preOrderPrint();
+        void insert(int key, TreeNode *root);
+        TreeNode* search(int key, TreeNode *root);
+        TreeNode* remove(int key, TreeNode* root);
 
-        
-}
+};
+
+
+

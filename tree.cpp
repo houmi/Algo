@@ -29,6 +29,8 @@ class Tree {
         //void preOrderPrintIterative(node*, string &) const;
         void postOrderPrintRecursive(node*, string &) const;
         //void postOrderPrintIterative(node*, string &) const;
+        void levelorder(void) const; 
+
         
         node* deleteTree(node*);
         void insert(int);
@@ -143,18 +145,46 @@ void Tree::preOrderPrintRecursive(node* root, string &str)  const {
 }
 
 
+// BFS
+void Tree::levelorder(void) const { 
+    queue<node *> nodeList;
+
+    if (_root) {
+        nodeList.push(_root);
+    }
+
+    cout << "level order print (top-bottom):";
+
+    while(nodeList.size()) {
+        node* temp = nodeList.front();
+        nodeList.pop();
+        cout << temp->data << " ";
+        if (temp->left) {
+            nodeList.push(temp->left);
+        }
+        if (temp->right) {
+            nodeList.push(temp->right);
+        }
+    }
+    cout << endl;
+}
+
+
 
 int main()
 {
     Tree bst;
-    bst.insert(5);
     bst.insert(4);
-    bst.insert(8);
     bst.insert(2);
+    bst.insert(6);
     bst.insert(1);
+    bst.insert(3);
+    bst.insert(5);
+    bst.insert(7);
     bst.inorder();
     bst.preorder();
     bst.postorder();
+    bst.levelorder();
     
 
     return 0;

@@ -14,13 +14,13 @@ class Tree {
         node* _root;
 
     public:
-        Tree() { _root = NULL; }
+        Tree() { _root = nullptr; }
         ~Tree() { _root = deleteTree(_root); }
-        bool isEmpty();
-        void inorder(void);
-        void inOrderPrint(node* root);
-        void postOrderPrint(node* root);
-        void preOrderPrint(node* root);
+        bool isEmpty() const;
+        void inorder(void) const;
+        void inOrderPrint(node* root) const;
+        void postOrderPrint(node* root) const;
+        void preOrderPrint(node* root) const ;
         node* deleteTree(node* root);
         void insert(int key);
         node* insert(int key, node* root);
@@ -37,7 +37,7 @@ Tree::node* Tree::deleteTree(node* root) {
         deleteTree(root->right);
         delete root;
     }
-    return NULL;
+    return nullptr;
 }
 
 void Tree::insert(int key) {
@@ -46,24 +46,26 @@ void Tree::insert(int key) {
 
 Tree::node* Tree::insert(int key, node* root) {
 
-    if (root == NULL) {
+    if (root == nullptr) {
         root = new node;
-        root->left = NULL;
-        root->right = NULL;
+        root->left = nullptr;
+        root->right = nullptr;
         root->data = key;
     }
 
-    else if (key < root->data) 
+    else if (key < root->data) {
         root->left = insert(key, root->left);
-    else if (key > root->data)
+    }
+    else if (key > root->data) {
         root->right = insert(key, root->right);
+    }
 
     return root;
 }
 
-void Tree::inorder(void) { inOrderPrint(_root); cout << endl; }
+void Tree::inorder(void) const { inOrderPrint(_root); cout << endl; }
 
-void Tree::inOrderPrint(node* root) {
+void Tree::inOrderPrint(node* root) const {
     if (root) {
         inOrderPrint(root->left);
         cout << root->data << " ";

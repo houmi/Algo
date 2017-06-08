@@ -21,10 +21,15 @@ class Tree {
         ~Tree() { _root = deleteTree(_root); }
         bool isEmpty() const;
         void inorder(void) const;
+        void preorder(void) const;
+        void postorder(void) const;
         void inOrderPrintRecursive(node*, string &) const;
         void inOrderPrintIterative(node*, string &) const;
-        void postOrderPrint(node*) const;
-        void preOrderPrint(node*) const ;
+        void preOrderPrintRecursive(node*, string &) const;
+        //void preOrderPrintIterative(node*, string &) const;
+        void postOrderPrintRecursive(node*, string &) const;
+        //void postOrderPrintIterative(node*, string &) const;
+        
         node* deleteTree(node*);
         void insert(int);
         node* insert(int,node*);
@@ -103,6 +108,42 @@ void Tree::inOrderPrintIterative(node* root, string &str) const {
 }
 
 
+void Tree::postorder(void) const { 
+    string str, str2;
+    postOrderPrintRecursive(_root, str);
+    //inOrderPrintIterative(_root, str2);
+    cout << "post order print (recursive):" << str << endl;
+    //cout << "in order print (iterative):" << str2 << endl;
+    
+}
+
+void Tree::postOrderPrintRecursive(node* root, string &str)  const {
+    if (root) {
+        postOrderPrintRecursive(root->left,str);
+        postOrderPrintRecursive(root->right,str);
+        str += to_string(root->data) + " ";
+    }
+}
+
+void Tree::preorder(void) const { 
+    string str, str2;
+    preOrderPrintRecursive(_root, str);
+    //inOrderPrintIterative(_root, str2);
+    cout << "pre order print (recursive):" << str << endl;
+    //cout << "in order print (iterative):" << str2 << endl;
+    
+}
+
+void Tree::preOrderPrintRecursive(node* root, string &str)  const {
+    if (root) {
+        str += to_string(root->data) + " ";
+        preOrderPrintRecursive(root->left,str);
+        preOrderPrintRecursive(root->right,str);
+    }
+}
+
+
+
 int main()
 {
     Tree bst;
@@ -112,6 +153,8 @@ int main()
     bst.insert(2);
     bst.insert(1);
     bst.inorder();
+    bst.preorder();
+    bst.postorder();
     
 
     return 0;

@@ -17,6 +17,7 @@ class Tree {
         Tree() { _root = NULL; }
         ~Tree() { _root = deleteTree(_root); }
         bool isEmpty();
+        void inorder(void);
         void inOrderPrint(node* root);
         void postOrderPrint(node* root);
         void preOrderPrint(node* root);
@@ -46,23 +47,26 @@ void Tree::insert(int key) {
 Tree::node* Tree::insert(int key, node* root) {
 
     if (root == NULL) {
-        node* temp = new node;
-        temp->left = NULL;
-        temp->right = NULL;
-        temp->data = key;
-        return temp;
+        root = new node;
+        root->left = NULL;
+        root->right = NULL;
+        root->data = key;
     }
 
-    if (key < root->data) 
-        return(insert(key, root->left));
-    else
-        return(insert(key, root->right));
+    else if (key < root->data) 
+        root->left = insert(key, root->left);
+    else if (key > root->data)
+        root->right = insert(key, root->right);
+
+    return root;
 }
+
+void Tree::inorder(void) { inOrderPrint(_root); cout << endl; }
 
 void Tree::inOrderPrint(node* root) {
     if (root) {
         inOrderPrint(root->left);
-        cout << root->data;
+        cout << root->data << " ";
         inOrderPrint(root->right);
     }
 }
@@ -76,8 +80,7 @@ int main()
     bst.insert(8);
     bst.insert(2);
     bst.insert(1);
-    
-
+    bst.inorder();
     
 
     return 0;

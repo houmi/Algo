@@ -1,4 +1,7 @@
 #include <iostream>
+#include <queue> // use STD for now...
+#include <stack>
+#include <string>
 
 using namespace std;
 
@@ -18,14 +21,15 @@ class Tree {
         ~Tree() { _root = deleteTree(_root); }
         bool isEmpty() const;
         void inorder(void) const;
-        void inOrderPrint(node* root) const;
-        void postOrderPrint(node* root) const;
-        void preOrderPrint(node* root) const ;
-        node* deleteTree(node* root);
-        void insert(int key);
-        node* insert(int key, node* root);
-        node* search(int key, node* root);
-        node* remove(int key, node* root);
+        void inOrderPrintRecursive(node*, string &) const;
+        void inOrderPrintIterative(node*, string &) const;
+        void postOrderPrint(node*) const;
+        void preOrderPrint(node*) const ;
+        node* deleteTree(node*);
+        void insert(int);
+        node* insert(int,node*);
+        node* search(int,node*);
+        node* remove(int,node*);
 
 };
 
@@ -63,13 +67,38 @@ Tree::node* Tree::insert(int key, node* root) {
     return root;
 }
 
-void Tree::inorder(void) const { inOrderPrint(_root); cout << endl; }
+void Tree::inorder(void) const { 
+    string str, str2;
+    inOrderPrintRecursive(_root, str);
+    inOrderPrintIterative(_root, str2);
+    cout << "in order print (recursive):" << str << endl;
+    cout << "in order print (iterative):" << str2 << endl;
+    
+}
 
-void Tree::inOrderPrint(node* root) const {
+void Tree::inOrderPrintRecursive(node* root, string &str)  const {
     if (root) {
-        inOrderPrint(root->left);
-        cout << root->data << " ";
-        inOrderPrint(root->right);
+        inOrderPrintRecursive(root->left,str);
+        str += to_string(root->data) + " ";
+        inOrderPrintRecursive(root->right,str);
+    }
+}
+
+void Tree::inOrderPrintIterative(node* root, string &str) const {
+    stack<node*> nodeStack;
+    for (;;) {
+        if (root) {
+            nodeStack.push(root);
+            root = root->left;
+        } else {
+            if (nodeStack.empty()) {
+                break;
+            }
+            root = nodeStack.top();
+            nodeStack.pop();
+            str += to_string(root->data) + " ";
+            root = root->right;
+        }
     }
 }
 

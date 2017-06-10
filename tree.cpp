@@ -31,6 +31,8 @@ class Tree {
         //void postOrderPrintIterative(node*, string &) const;
         void levelorder() const; 
         void levelorder2() const;
+        void reverse();
+        void reverseTree(node*);
 
         
         node* deleteTree(node*);
@@ -200,6 +202,19 @@ void Tree::levelorder2() const {
     cout << endl;
 }
 
+void Tree::reverse() {
+    cout << "Reversing Tree" << endl;
+    reverseTree(_root);
+}
+
+void Tree::reverseTree(node* root) {
+    if (root) {
+        reverseTree(root->left);
+        reverseTree(root->right);
+        std:swap(root->left, root->right);
+    }
+}
+
 int main()
 {
     Tree bst;
@@ -215,6 +230,9 @@ int main()
     bst.postorder();
     bst.levelorder();
     bst.levelorder2();
+    bst.reverse();
+    bst.levelorder();
+    
     
 
     return 0;

@@ -20,16 +20,17 @@ class Tree {
         Tree() { _root = nullptr; }
         ~Tree() { _root = deleteTree(_root); }
         bool isEmpty() const;
-        void inorder(void) const;
-        void preorder(void) const;
-        void postorder(void) const;
+        void inorder() const;
+        void preorder() const;
+        void postorder() const;
         void inOrderPrintRecursive(node*, string &) const;
         void inOrderPrintIterative(node*, string &) const;
         void preOrderPrintRecursive(node*, string &) const;
         //void preOrderPrintIterative(node*, string &) const;
         void postOrderPrintRecursive(node*, string &) const;
         //void postOrderPrintIterative(node*, string &) const;
-        void levelorder(void) const; 
+        void levelorder() const; 
+        void levelorder2() const;
 
         
         node* deleteTree(node*);
@@ -74,7 +75,7 @@ Tree::node* Tree::insert(int key, node* root) {
     return root;
 }
 
-void Tree::inorder(void) const { 
+void Tree::inorder() const { 
     string str, str2;
     inOrderPrintRecursive(_root, str);
     inOrderPrintIterative(_root, str2);
@@ -110,7 +111,7 @@ void Tree::inOrderPrintIterative(node* root, string &str) const {
 }
 
 
-void Tree::postorder(void) const { 
+void Tree::postorder() const { 
     string str, str2;
     postOrderPrintRecursive(_root, str);
     //inOrderPrintIterative(_root, str2);
@@ -127,7 +128,7 @@ void Tree::postOrderPrintRecursive(node* root, string &str)  const {
     }
 }
 
-void Tree::preorder(void) const { 
+void Tree::preorder() const { 
     string str, str2;
     preOrderPrintRecursive(_root, str);
     //inOrderPrintIterative(_root, str2);
@@ -146,7 +147,7 @@ void Tree::preOrderPrintRecursive(node* root, string &str)  const {
 
 
 // BFS
-void Tree::levelorder(void) const { 
+void Tree::levelorder() const { 
     queue<node *> nodeList;
 
     if (_root) {
@@ -169,7 +170,35 @@ void Tree::levelorder(void) const {
     cout << endl;
 }
 
+// BFS
+void Tree::levelorder2() const { 
+    queue<node *> nodeList;
+    stack<node *> nodeList2;
 
+    if (_root) {
+        nodeList.push(_root);
+    }
+
+    cout << "level order print (bottom-top):";
+
+    while(nodeList.size()) {
+        node* temp = nodeList.front();
+        nodeList.pop();
+        nodeList2.push(temp);
+        if (temp->right) {
+            nodeList.push(temp->right);
+        }
+        if (temp->left) {
+            nodeList.push(temp->left);
+        }
+    }
+
+    while (nodeList2.size()) {
+        cout << nodeList2.top()->data << " ";
+        nodeList2.pop();
+    }
+    cout << endl;
+}
 
 int main()
 {
@@ -185,6 +214,7 @@ int main()
     bst.preorder();
     bst.postorder();
     bst.levelorder();
+    bst.levelorder2();
     
 
     return 0;

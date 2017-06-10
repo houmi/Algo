@@ -6,103 +6,94 @@
 
 using namespace std;
 
+struct Tree_Node;
+
 class Tree {
     private:
 
-        struct node {
-            node* left;
-            node* right;
-            int data;
-        };
-
+        using node = Tree_Node;
         node* _root;
 
     public:
         Tree() { _root = nullptr; }
-        ~Tree() { _root = deleteTree(_root); }
+        ~Tree() { _root = deleteTree(); }
         bool isEmpty() const;
         void inorder() const;
         void preorder() const;
         void postorder() const;
-        void inOrderPrintRecursive(node*, string &) const;
-        void inOrderPrintIterative(node*, string &) const;
-        void preOrderPrintRecursive(node*, string &) const;
-        //void preOrderPrintIterative(node*, string &) const;
-        void postOrderPrintRecursive(node*, string &) const;
-        //void postOrderPrintIterative(node*, string &) const;
+        void inOrderPrintRecursive(string &) const;
+        void inOrderPrintIterative(string &) const ;
+        void preOrderPrintRecursive(string &) const;
+        void postOrderPrintRecursive(string &) const;
         void levelorder() const; 
         void levelorder2() const;
         void reverse();
-        void reverseTree(node*);
-        bool isBSTUtil(node* , int , int );
+        void reverseTree();
+        bool isBSTUtil(int , int );
         void isBST();
 
         
-        node* deleteTree(node*);
+        node* deleteTree();
         void insert(int);
-        node* insert(int,node*);
-        node* search(int,node*);
-        node* remove(int,node*);
+       
+};
 
+struct Tree_Node {
+        Tree left;
+        Tree right;
+        int data;
 };
 
 /////////////////////////////////////////////////////////////////
 
-Tree::node* Tree::deleteTree(node* root) {
-    if (root) {
-        deleteTree(root->left);
-        deleteTree(root->right);
-        delete root;
+Tree::node* Tree::deleteTree() {
+    if (_root) {
+        _root->left.deleteTree();
+        _root->right.deleteTree();
+        delete _root;
+        _root = nullptr;
     }
-    return nullptr;
+    return _root;
 }
 
 void Tree::insert(int key) {
-    _root = insert(key, _root);
-}
 
-Tree::node* Tree::insert(int key, node* root) {
-
-    if (root == nullptr) {
-        root = new node;
-        root->left = nullptr;
-        root->right = nullptr;
-        root->data = key;
+    if (_root == nullptr) {
+        _root = new node;
+        _root->data = key;
     }
-
-    else if (key < root->data) {
-        root->left = insert(key, root->left);
+    else if (key < _root->data) {
+        _root->left.insert(key);
     }
-    else if (key > root->data) {
-        root->right = insert(key, root->right);
+    else if (key > _root->data) {
+        _root->right.insert(key);
     }
-
-    return root;
 }
 
 void Tree::inorder() const { 
     string str, str2;
-    inOrderPrintRecursive(_root, str);
-    inOrderPrintIterative(_root, str2);
+    inOrderPrintRecursive(str);
+    inOrderPrintIterative(str2);
     cout << "in order print (recursive):" << str << endl;
     cout << "in order print (iterative):" << str2 << endl;
     
 }
 
-void Tree::inOrderPrintRecursive(node* root, string &str)  const {
-    if (root) {
-        inOrderPrintRecursive(root->left,str);
-        str += to_string(root->data) + " ";
-        inOrderPrintRecursive(root->right,str);
+void Tree::inOrderPrintRecursive(string &str)  const {
+    if (_root) {
+        _root->left.inOrderPrintRecursive(str);
+        str += to_string(_root->data) + " ";
+        _root->right.inOrderPrintRecursive(str);
     }
 }
 
-void Tree::inOrderPrintIterative(node* root, string &str) const {
+void Tree::inOrderPrintIterative(string &str) const {
     stack<node*> nodeStack;
+    node* root = _root;
     for (;;) {
         if (root) {
             nodeStack.push(root);
-            root = root->left;
+            root = root->left._root;
         } else {
             if (nodeStack.empty()) {
                 break;
@@ -110,53 +101,48 @@ void Tree::inOrderPrintIterative(node* root, string &str) const {
             root = nodeStack.top();
             nodeStack.pop();
             str += to_string(root->data) + " ";
-            root = root->right;
+            root = root->right._root;
         }
     }
 }
 
 
 void Tree::postorder() const { 
-    string str, str2;
-    postOrderPrintRecursive(_root, str);
-    //inOrderPrintIterative(_root, str2);
+    string str;
+    postOrderPrintRecursive(str);
     cout << "post order print (recursive):" << str << endl;
-    //cout << "in order print (iterative):" << str2 << endl;
-    
 }
 
-void Tree::postOrderPrintRecursive(node* root, string &str)  const {
-    if (root) {
-        postOrderPrintRecursive(root->left,str);
-        postOrderPrintRecursive(root->right,str);
-        str += to_string(root->data) + " ";
+void Tree::postOrderPrintRecursive(string &str)  const {
+    if (_root) {
+        _root->left.postOrderPrintRecursive(str);
+        _root->right.postOrderPrintRecursive(str);       
+        str += to_string(_root->data) + " ";
     }
 }
 
 void Tree::preorder() const { 
-    string str, str2;
-    preOrderPrintRecursive(_root, str);
-    //inOrderPrintIterative(_root, str2);
-    cout << "pre order print (recursive):" << str << endl;
-    //cout << "in order print (iterative):" << str2 << endl;
-    
+    string str;
+    preOrderPrintRecursive(str);
+    cout << "pre order print (recursive):" << str << endl;   
 }
 
-void Tree::preOrderPrintRecursive(node* root, string &str)  const {
-    if (root) {
-        str += to_string(root->data) + " ";
-        preOrderPrintRecursive(root->left,str);
-        preOrderPrintRecursive(root->right,str);
+void Tree::preOrderPrintRecursive(string &str)  const {
+    if (_root) {
+        str += to_string(_root->data) + " ";
+        _root->left.preOrderPrintRecursive(str);
+        _root->right.preOrderPrintRecursive(str);
     }
 }
-
 
 // BFS
 void Tree::levelorder() const { 
     queue<node *> nodeList;
 
-    if (_root) {
-        nodeList.push(_root);
+    node* root = _root;
+
+    if (root) {
+        nodeList.push(root);
     }
 
     cout << "level order print (top-bottom):";
@@ -165,11 +151,11 @@ void Tree::levelorder() const {
         node* temp = nodeList.front();
         nodeList.pop();
         cout << temp->data << " ";
-        if (temp->left) {
-            nodeList.push(temp->left);
+        if (temp->left._root) {
+            nodeList.push(temp->left._root);
         }
-        if (temp->right) {
-            nodeList.push(temp->right);
+        if (temp->right._root) {
+            nodeList.push(temp->right._root);
         }
     }
     cout << endl;
@@ -179,9 +165,10 @@ void Tree::levelorder() const {
 void Tree::levelorder2() const { 
     queue<node *> nodeList;
     stack<node *> nodeList2;
+    node* root = _root;
 
-    if (_root) {
-        nodeList.push(_root);
+    if (root) {
+        nodeList.push(root);
     }
 
     cout << "level order print (bottom-top):";
@@ -190,11 +177,11 @@ void Tree::levelorder2() const {
         node* temp = nodeList.front();
         nodeList.pop();
         nodeList2.push(temp);
-        if (temp->right) {
-            nodeList.push(temp->right);
+        if (temp->right._root) {
+            nodeList.push(temp->right._root);
         }
-        if (temp->left) {
-            nodeList.push(temp->left);
+        if (temp->left._root) {
+            nodeList.push(temp->left._root);
         }
     }
 
@@ -207,19 +194,19 @@ void Tree::levelorder2() const {
 
 void Tree::reverse() {
     cout << "Reversing Tree" << endl;
-    reverseTree(_root);
+    reverseTree();
 }
 
-void Tree::reverseTree(node* root) {
-    if (root) {
-        reverseTree(root->left);
-        reverseTree(root->right);
-        std:swap(root->left, root->right);
+void Tree::reverseTree() {
+    if (_root) {
+        _root->left.reverseTree();
+        _root->right.reverseTree();
+       std:swap(_root->left._root, _root->right._root);
     }
 }
 
 void Tree::isBST() {
-    bool isBST = isBSTUtil(_root, INT_MIN, INT_MAX);
+    bool isBST = isBSTUtil(INT_MIN, INT_MAX);
     if (isBST) {
         cout << "Tree is a BST" << endl;
     } else {
@@ -227,14 +214,15 @@ void Tree::isBST() {
     }
 }
 
-bool Tree::isBSTUtil(node* root, int min, int max) {
-    if (root == nullptr) {
+bool Tree::isBSTUtil(int min, int max) {
+    if (_root == nullptr) {
         return true;
-    } else if (root->data < min || root->data > max) {
+    } else if (_root->data < min || _root->data > max) {
         return false;
     }
     
-    return isBSTUtil(root->left, min, root->data) && isBSTUtil(root->right, root->data, max);
+    return (_root->left.isBSTUtil(min, _root->data)) && (_root->right.isBSTUtil(min, _root->data));
+    
 }
 
 int main()

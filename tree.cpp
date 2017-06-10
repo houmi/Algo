@@ -2,6 +2,7 @@
 #include <queue> // use STD for now...
 #include <stack>
 #include <string>
+#include <climits>
 
 using namespace std;
 
@@ -33,6 +34,8 @@ class Tree {
         void levelorder2() const;
         void reverse();
         void reverseTree(node*);
+        bool isBSTUtil(node* , int , int );
+        void isBST();
 
         
         node* deleteTree(node*);
@@ -215,9 +218,30 @@ void Tree::reverseTree(node* root) {
     }
 }
 
+void Tree::isBST() {
+    bool isBST = isBSTUtil(_root, INT_MIN, INT_MAX);
+    if (isBST) {
+        cout << "Tree is a BST" << endl;
+    } else {
+        cout << "Tree is NOT BST" << endl;
+    }
+}
+
+bool Tree::isBSTUtil(node* root, int min, int max) {
+    if (root == nullptr) {
+        return true;
+    } else if (root->data < min || root->data > max) {
+        return false;
+    }
+    
+    return isBSTUtil(root->left, min, root->data) && isBSTUtil(root->right, root->data, max);
+}
+
 int main()
 {
     Tree bst;
+    
+    // fill tree
     bst.insert(4);
     bst.insert(2);
     bst.insert(6);
@@ -225,12 +249,24 @@ int main()
     bst.insert(3);
     bst.insert(5);
     bst.insert(7);
+
+    // print
     bst.inorder();
     bst.preorder();
     bst.postorder();
+
+    // BFS
     bst.levelorder();
     bst.levelorder2();
+
+    // reverse & isBST
     bst.reverse();
+    bst.isBST();
+    bst.levelorder();
+
+    // reverse back
+    bst.reverse();
+    bst.isBST();
     bst.levelorder();
     
     

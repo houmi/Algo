@@ -13,10 +13,14 @@ class Tree {
 
         using node = Tree_Node;
         node* _root;
+        Tree(const Tree &obj);
+        Tree& operator=( const Tree& other);
 
     public:
         Tree() { _root = nullptr; }
         ~Tree() { _root = deleteTree(); }
+        
+
         bool isEmpty() const;
         void inorder() const;
         void preorder() const;

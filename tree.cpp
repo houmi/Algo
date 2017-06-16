@@ -35,11 +35,11 @@ class Tree {
         void reverseTree();
         bool isBSTUtil(int , int );
         void isBST();
+        int getHeight();
 
         
         node* deleteTree();
         void insert(int);
-       
 };
 
 struct Tree_Node {
@@ -218,6 +218,15 @@ void Tree::isBST() {
     }
 }
 
+int Tree::getHeight() {
+    if (_root == nullptr) {
+        return 0;
+    }
+
+    return max(_root->left.getHeight(), _root->right.getHeight())+1;
+
+}
+
 bool Tree::isBSTUtil(int min, int max) {
     if (_root == nullptr) {
         return true;
@@ -260,6 +269,7 @@ int main()
     bst.reverse();
     bst.isBST();
     bst.levelorder();
+    cout << "Height of Tree: " << bst.getHeight() << endl;
     
     
 

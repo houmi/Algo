@@ -3,6 +3,7 @@
 #include <map>
 #include <unordered_set>
 #include <algorithm>
+#include <climits>
 
 using namespace std;
 
@@ -33,6 +34,7 @@ void findPairSum(vector<int> arr, int k) {
 }
 
 void removeDuplicates(vector<int> arr) {
+    cout << "Remove Dups" << endl;
     vector<int> arr2(arr);
     sort(arr2.begin(), arr2.end());
 
@@ -47,6 +49,20 @@ void removeDuplicates(vector<int> arr) {
     printArray(arr2);
 }
 
+void maximumSubarray(vector<int> arr) {
+    cout << "Maximum Sub-array: ";
+    int curSum = 0;
+    int maxSum = 0;
+    curSum = maxSum = INT_MIN;
+    for ( auto num : arr) {
+        curSum = max(curSum+num, num);
+        maxSum = max(curSum, maxSum);
+    }
+
+    cout << maxSum << endl;
+
+}
+
 
 
 int main() {
@@ -56,6 +72,7 @@ int main() {
     printArray(arr);
     findPairSum(arr, 13);
     removeDuplicates(arr);
+    maximumSubarray(arr);
 
 
     

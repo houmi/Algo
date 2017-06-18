@@ -63,6 +63,41 @@ void maximumSubarray(vector<int> arr) {
 
 }
 
+void merge(vector<int> &arr, int low, int middle, int high) {
+    vector<int> aux(arr);
+    int i=low, j = middle+1, k = 0;
+
+    for (int k=low; k<=high;k++) {
+        if (i>middle) {  
+            arr[k] = aux[j++];
+        } else if (j>high) {
+            arr[k] = aux[i++];
+        }   
+        else if (aux[i] < aux[j]) {
+            arr[k] = aux[i++];
+        } else {
+            arr[k] = aux[j++];
+        }
+    }
+}
+
+void mergesorthelper(vector<int> &arr, int low, int high) {
+    if (low<high) {
+        int mid = low + (high-low)/2;
+        mergesorthelper(arr, low, mid);
+        mergesorthelper(arr, mid+1, high);
+        merge(arr, low, mid, high);
+    }
+}
+
+void mergesort(vector<int> arr) {
+    cout << "Merge Sort" << endl;
+    vector<int> arr2(arr);
+    mergesorthelper(arr2, 0, arr2.size()-1);
+    printArray(arr2);
+}
+
+
 
 
 int main() {
@@ -73,6 +108,7 @@ int main() {
     findPairSum(arr, 13);
     removeDuplicates(arr);
     maximumSubarray(arr);
+    mergesort(arr);
 
 
     

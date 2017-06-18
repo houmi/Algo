@@ -7,8 +7,10 @@
 
 using namespace std;
 
-void printArray(vector<int> arr) {
-    cout << "Print vector" << endl;
+void printArray(vector<int> arr, bool print = true) {
+    if (print) {
+        cout << "Print vector" << endl;
+    }
     string delim = "";
     for (auto num : arr) {
         cout << delim << num;
@@ -94,9 +96,40 @@ void mergesort(vector<int> arr) {
     cout << "Merge Sort" << endl;
     vector<int> arr2(arr);
     mergesorthelper(arr2, 0, arr2.size()-1);
-    printArray(arr2);
+    printArray(arr2, false);
 }
 
+int qs_partition(vector<int> &arr, int low, int high) {
+    
+    int pivot = high;
+    int firsthigh = low;
+    for (int i=low; i<high; i++) {
+        if (arr[i] < arr[pivot]) {
+            swap(arr[i], arr[firsthigh]);
+            firsthigh++;
+        }
+    }
+    swap(arr[firsthigh], arr[pivot]);
+
+    return firsthigh;
+}
+
+void quicksorthelper(vector<int> & arr, int low, int high) {
+    if (low < high) {
+        int p = qs_partition(arr, low, high);
+        quicksorthelper(arr, low, p-1);
+        quicksorthelper(arr, p+1, high);
+    }
+}
+
+
+
+void quicksort(vector<int> arr) {
+    cout << "Quick Sort" << endl;
+    vector<int> arr2(arr);
+    quicksorthelper(arr2, 0, arr2.size()-1);
+    printArray(arr2, false);
+}
 
 
 
@@ -109,6 +142,7 @@ int main() {
     removeDuplicates(arr);
     maximumSubarray(arr);
     mergesort(arr);
+    quicksort(arr);
 
 
     

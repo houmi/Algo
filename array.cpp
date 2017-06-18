@@ -4,6 +4,7 @@
 #include <unordered_set>
 #include <algorithm>
 #include <climits>
+#include <queue>
 
 using namespace std;
 
@@ -48,7 +49,7 @@ void removeDuplicates(vector<int> arr) {
     }
     
     arr2.resize(idx);
-    printArray(arr2);
+    printArray(arr2, false);
 }
 
 void maximumSubarray(vector<int> arr) {
@@ -122,8 +123,6 @@ void quicksorthelper(vector<int> & arr, int low, int high) {
     }
 }
 
-
-
 void quicksort(vector<int> arr) {
     cout << "Quick Sort" << endl;
     vector<int> arr2(arr);
@@ -131,6 +130,25 @@ void quicksort(vector<int> arr) {
     printArray(arr2, false);
 }
 
+
+void frequency(vector<int> arr) {
+    cout << "Number:Frequency" << endl;
+    map<int,int> freq;
+    for (auto num : arr) {
+        freq[num]++;
+    }
+
+    priority_queue<pair<int, int>> pq;
+    for (auto it : freq) {
+        pq.push(make_pair(it.second, it.first));
+    }
+
+    while (!pq.empty()) {
+        cout << pq.top().second << ":" << pq.top().first << endl;
+        pq.pop();
+       
+    }
+}
 
 
 int main() {
@@ -143,6 +161,7 @@ int main() {
     maximumSubarray(arr);
     mergesort(arr);
     quicksort(arr);
+    frequency(arr);
 
 
     

@@ -21,7 +21,7 @@ node* getnode() {
     return newnode;
 }
 
-void helperprint(node* root, vector<string>& words, string &word) {
+void helperprint(node* root, vector<string>& words, string word) {
     
     for (int i=0; i<26;i++) {
         if (root->children[i]) {
@@ -35,7 +35,8 @@ void helperprint(node* root, vector<string>& words, string &word) {
     }
 }
 
-void printall(node *root) {
+
+void printall(node *root, string prefix="") {
 
     string word = "";
     vector<string> words;
@@ -43,7 +44,7 @@ void printall(node *root) {
     helperprint(root, words, word);
 
     for (auto word : words) {
-        cout << word << endl;
+        cout << prefix << word << endl;
     }
 
     
@@ -65,6 +66,33 @@ void insert(node* root, string str) {
 }
 
 
+node* findstring(node* root, string word) {
+    
+    node* cur = root;
+
+    for (char ch : word) {
+        int index = ch - 'a';
+        if (cur->children[index]) {
+            cur = cur->children[index];
+        } else {
+            return nullptr;
+        }
+    }
+
+    return cur;
+
+}
+
+void autocomplete(node* root, string word) {
+    
+    node* res = findstring(root, word);
+    if (res != nullptr) {
+        printall(res, word);
+    }
+}
+
+
+
 
 int main() {
     node* trie = getnode();       
@@ -73,7 +101,18 @@ int main() {
        insert(trie, s);
     }
 
+    string key;
 
+    cout << "all strings in dictionary:" << endl;
     printall(trie);
+
+    cout << "autocomplete for m" << endl;
+    key = "m";
+    autocomplete(trie, key);
+
+    cout << "autocomplete for gr" << endl;
+    key = "gr";
+    autocomplete(trie, key);
+
     return 0;
 }

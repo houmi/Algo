@@ -96,7 +96,7 @@ void autocomplete(node* root, string word) {
 
 int main() {
     node* trie = getnode();       
-    vector<string> str = {"noob", "max", "man", "mix", "grooming", "groom"};
+    vector<string> str = {"no", "noob", "max", "man", "mix", "grooming", "groom"};
     for (auto s:str) {
        insert(trie, s);
     }
@@ -105,6 +105,10 @@ int main() {
 
     cout << "all strings in dictionary:" << endl;
     printall(trie);
+
+    cout << "autocomplete for no" << endl;
+    key = "no";
+    autocomplete(trie, key);
 
     cout << "autocomplete for m" << endl;
     key = "m";

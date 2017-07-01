@@ -114,23 +114,33 @@ void balanceParenthesis(string str) {
     vector<string> res;
 
     strList.push(str);
+    visitedStr.insert(str);
+    bool level;
 
     while (!strList.empty()) {
         string temp = strList.front();
         strList.pop();
-        visitedStr.insert(temp);
 
-        bool isValid = isValidString(temp);
-        if (isValid) {
+        if (isValidString(temp)) {
             res.push_back(temp);
-        } else {
-            for (int i=0; i<temp.size();i++) {
-                string s = temp.substr(0,i) + temp.substr(i+1,temp.size());
-                if (visitedStr.find(s) == visitedStr.end()) {
-                    strList.push(s);
-                }
+            level = true;
+        }
+
+        if (level) {
+            continue;
+        }
+            
+        for (int i=0; i<temp.size();i++) {
+            if (!(temp[i] == ')' || temp[i] == '(')) {
+                continue;
+            }
+            string s = temp.substr(0,i) + temp.substr(i+1);
+            if (visitedStr.find(s) == visitedStr.end()) {
+                strList.push(s);
+                visitedStr.insert(s);
             }
         }
+        
     }
 
     cout << "Balance Parenthesis for " << str << ":" << endl;
@@ -151,7 +161,14 @@ int main() {
     parenthesis(3);
     parenthesis(4);
 
-    balanceParenthesis("(()))");
+    balanceParenthesis("v");
+    balanceParenthesis("(v)v");
+    balanceParenthesis(")");
+    balanceParenthesis("()(v)())v");
+    balanceParenthesis("(");
+    balanceParenthesis(")(");
+    balanceParenthesis("(v()()()");
+    balanceParenthesis("(()(()(()(");
 
     return 0;
 }

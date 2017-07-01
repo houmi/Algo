@@ -30,6 +30,7 @@ void print(node* root) {
     if (root == nullptr) {
         cout << "nullptr";
         cout << endl;
+        return;
     }
     cout << root->val << "->";
     print(root->next);

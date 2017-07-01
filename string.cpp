@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
+#include <queue>
 
 using namespace std;
 
@@ -87,6 +89,58 @@ void parenthesis(int n) {
     }
 }
 
+bool isValidString(string str) {
+
+    int leftCount=0;
+
+    for (char ch : str) {
+        if (ch == '(') {
+            leftCount++;
+        } else if (ch == ')') {
+            leftCount--;
+            if (leftCount < 0) {
+                return false;
+            }
+        }
+    }
+
+    return (leftCount == 0);
+
+}
+
+void balanceParenthesis(string str) {
+    queue<string> strList;
+    set<string> visitedStr;
+    vector<string> res;
+
+    strList.push(str);
+
+    while (!strList.empty()) {
+        string temp = strList.front();
+        strList.pop();
+        visitedStr.insert(temp);
+
+        bool isValid = isValidString(temp);
+        if (isValid) {
+            res.push_back(temp);
+        } else {
+            for (int i=0; i<temp.size();i++) {
+                string s = temp.substr(0,i) + temp.substr(i+1,temp.size());
+                if (visitedStr.find(s) == visitedStr.end()) {
+                    strList.push(s);
+                }
+            }
+        }
+    }
+
+    cout << "Balance Parenthesis for " << str << ":" << endl;
+    for (auto s : res) {
+        cout << s << " ";
+    }
+    cout << endl;
+    
+}
+
 int main() {
 
     string s = "         THis is a test        blablabla                crap";
@@ -96,6 +150,8 @@ int main() {
     parenthesis(2);
     parenthesis(3);
     parenthesis(4);
+
+    balanceParenthesis("(()))");
 
     return 0;
 }

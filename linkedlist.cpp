@@ -36,6 +36,25 @@ void print(node* root) {
     print(root->next);
 }
 
+void reverse(node ** root) {
+    cout << "Reverse linked list (iterative)" << endl;
+    if (root == nullptr) {
+        return;
+    }
+
+    node* rev = nullptr;
+
+    while (*root != nullptr) {
+        node* next  = (*root)->next;
+        (*root)->next = rev;
+        rev = *root;
+        *root = next;        
+    }
+
+    *root = rev;
+
+}
+
 
 int main() {
     node* list = nullptr;
@@ -46,6 +65,8 @@ int main() {
         insert(&list, num);
     }
 
+    print(list);
+    reverse(&list);
     print(list);
 
     return 0;

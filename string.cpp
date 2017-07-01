@@ -115,7 +115,7 @@ void balanceParenthesis(string str) {
 
     strList.push(str);
     visitedStr.insert(str);
-    bool level;
+    bool level = false;
 
     while (!strList.empty()) {
         string temp = strList.front();
@@ -130,7 +130,7 @@ void balanceParenthesis(string str) {
             continue;
         }
             
-        for (int i=0; i<temp.size();i++) {
+        for (size_t i=0, len = temp.length(); i<len; ++i) {
             if (!(temp[i] == ')' || temp[i] == '(')) {
                 continue;
             }
@@ -169,6 +169,7 @@ int main() {
     balanceParenthesis(")(");
     balanceParenthesis("(v()()()");
     balanceParenthesis("(()(()(()(");
+    balanceParenthesis("))))))))))))))()()");
 
     return 0;
 }

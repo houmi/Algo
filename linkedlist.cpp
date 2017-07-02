@@ -26,6 +26,23 @@ void insert(node** root, int key) {
     }
 }
 
+void insertLast(node** root, int key) {
+    node *temp = new node(key);
+
+    node* cur = *root;
+
+    while (cur != nullptr && cur->next != nullptr) {
+        cur = cur->next;
+    }
+
+    if (cur == nullptr) {
+        cur = temp;
+    } else {
+        cur->next = temp;
+    }
+    
+}
+
 void print(node* root) {
     if (root == nullptr) {
         cout << "nullptr";
@@ -68,6 +85,34 @@ node* reverseRecurse(node *root) {
 
 }
 
+void remove(node** root, int key) {
+    cout << "Removing node with value " << key << " from the list" << endl;
+    if (*root == nullptr) {
+        return;
+    }
+
+    if ((*root)->val == key) {
+        node* cur = *root;
+        *root = (*root)->next;
+        delete cur;
+        return;
+    }
+
+    node* cur = *root;
+
+    while (cur != nullptr) {
+        if (cur->next->val == key) {
+            node* del = cur->next;
+            cur->next = del->next;
+            delete del;
+            return;
+        }
+
+        cur = cur->next;
+    }
+
+}
+
 
 int main() {
     node* list = nullptr;
@@ -83,6 +128,17 @@ int main() {
     print(list);
     cout << "Reverse linked list (recursive)" << endl;
     list = reverseRecurse(list);
+    print(list);
+    remove(&list,1); print(list);
+    remove(&list,5); print(list);
+    remove(&list,3); print(list);
+
+    arr = {6,8,10,12,14,16,18,20};
+
+    for (auto num : arr) {
+        insertLast(&list, num);
+    }
+    
     print(list);
 
     return 0;

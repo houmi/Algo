@@ -55,6 +55,19 @@ void reverse(node ** root) {
 
 }
 
+node* reverseRecurse(node *root) {
+    if (root == nullptr || root->next == nullptr) {
+        return root;
+    }
+
+    node* p = reverseRecurse(root->next);
+    root->next->next = root;
+    root->next = nullptr;
+
+    return p;
+
+}
+
 
 int main() {
     node* list = nullptr;
@@ -67,6 +80,9 @@ int main() {
 
     print(list);
     reverse(&list);
+    print(list);
+    cout << "Reverse linked list (recursive)" << endl;
+    list = reverseRecurse(list);
     print(list);
 
     return 0;

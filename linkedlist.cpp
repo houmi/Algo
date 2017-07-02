@@ -82,7 +82,6 @@ node* reverseRecurse(node *root) {
     root->next = nullptr;
 
     return p;
-
 }
 
 void remove(node** root, int key) {
@@ -113,6 +112,33 @@ void remove(node** root, int key) {
 
 }
 
+bool isPalindrome(node* root) {
+    node* slow = root;
+    node* fast = root;
+    node* cur = root;
+
+    // move slow to mid linked list
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    // reverse list from slow -> fast
+    reverse(&slow);
+    
+    while (slow!=nullptr && cur!=nullptr) {
+        if (slow->val != cur->val) {
+            return false;
+        }
+        slow = slow->next;
+        cur = cur->next;
+    }
+
+    return true;    
+}
+
+
+
 
 int main() {
     node* list = nullptr;
@@ -133,13 +159,21 @@ int main() {
     remove(&list,5); print(list);
     remove(&list,3); print(list);
 
-    arr = {6,8,10,12,14,16,18,20};
+    for (int i=6; i <=20; i += 2) {
+        insertLast(&list, i);
+    }
 
-    for (auto num : arr) {
-        insertLast(&list, num);
+    for (int i=4; i<=20; i += 2) {
+        insert(&list, i);
     }
     
     print(list);
+
+    if (isPalindrome(list)) {
+        cout << "List is Palindrom" << endl;
+    } else {
+        cout << "List isn't Palindrom" << endl;
+    }
 
     return 0;
 }

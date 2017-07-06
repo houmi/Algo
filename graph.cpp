@@ -1,11 +1,14 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
+
 class Graph {
     public:
         
         void add_edge(Graph *, int, int, bool);
         int degree(int);
+        void print_graph(Graph *);
         Graph() { initialize_graph(); }
         ~Graph() {}
         void initialize_graph();
@@ -53,16 +56,35 @@ void Graph::add_edge(Graph *g, int v, int w, bool directed = true) {
     g->edges[v] = node; // insert at front
     g->numEdges++;
     g->degrees[v]++;
-    g->numVertices += 2;
+    g->numVertices++;
 
     // if directed == false TBD add_edge(g, w, x, false)
+}
+
+void Graph::print_graph(Graph *g) {
+    edge_node *node = nullptr;
+    for (int i=1, len = g->numVertices; i<=len ; ++i) {
+        cout << i << ": ";
+        node = g->edges[i];
+        while (node != nullptr) {
+            cout << " " << node->destination;
+            node = node->next;
+        }
+        cout << endl;
+    }
 }
 
 int main() {
 
     Graph *g = new Graph;
-
-
+    g->add_edge(g, 1, 2);
+    g->add_edge(g, 2, 4);
+    g->add_edge(g, 2, 3);
+    g->add_edge(g, 3, 5);
+    g->add_edge(g, 4, 5);
+    g->add_edge(g, 5, 6);
+    g->add_edge(g, 6, 7);
+    g->print_graph(g);
 
     return 0;
 }

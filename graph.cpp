@@ -4,8 +4,8 @@
 class Graph {
     public:
         
-        void addEdge(int v, int w);
-        int degree(int v);
+        void add_edge(Graph *, int, int, bool);
+        int degree(int);
         Graph() { initialize_graph(); }
         ~Graph() {}
         void initialize_graph();
@@ -20,6 +20,7 @@ class Graph {
             int destination;
             int weight;
             edge_node *next;
+            edge_node(int dest, int weight): destination(dest), weight(weight), next(nullptr) {}
         };
 
         int numEdges;
@@ -45,9 +46,21 @@ void Graph::initialize_graph() {
 
 }
 
+void Graph::add_edge(Graph *g, int v, int w, bool directed = true) {
+    edge_node *node = new edge_node(w, 0);
+    
+    node->next = g->edges[v];
+    g->edges[v] = node; // insert at front
+    g->numEdges++;
+    g->degrees[v]++;
+    g->numVertices += 2;
+
+    // if directed == false TBD add_edge(g, w, x, false)
+}
+
 int main() {
 
-    Graph g;
+    Graph *g = new Graph;
 
 
 

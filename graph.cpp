@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <queue>
+#include <set>
 
 using namespace std;
 
@@ -9,6 +11,7 @@ class Graph {
         void add_edge(Graph *, int, int, bool);
         int degree(int);
         void print_graph(Graph *);
+        void BFS(Graph*, int);
         Graph() { initialize_graph(); }
         ~Graph() {}
         void initialize_graph();
@@ -74,17 +77,47 @@ void Graph::print_graph(Graph *g) {
     }
 }
 
+void Graph::BFS(Graph *g, int start) {
+    queue<int> Q;
+    set<int> visited;
+    
+    cout << "Graph Traversal BFS (Start = " << start << ")" << endl;
+
+    Q.push(start);
+    visited.insert(start); 
+    while (!Q.empty()) {
+        int v = Q.front();
+        Q.pop();
+        cout << v << " ";
+        edge_node* node = g->edges[v];
+        while (node !=nullptr) {
+            int dest = node->destination;
+            if (visited.find(dest) == visited.end()) {
+                Q.push(dest);
+                visited.insert(dest);
+            }
+            node = node->next;
+        }
+    }
+
+    cout << endl;
+
+
+}
+
 int main() {
 
     Graph *g = new Graph;
     g->add_edge(g, 1, 2);
     g->add_edge(g, 2, 4);
-    g->add_edge(g, 2, 3);
-    g->add_edge(g, 3, 5);
+    g->add_edge(g, 3, 2);
+    g->add_edge(g, 5, 3);
     g->add_edge(g, 4, 5);
     g->add_edge(g, 5, 6);
     g->add_edge(g, 6, 7);
     g->print_graph(g);
+    g->BFS(g,1);
+    g->BFS(g,3);
 
     return 0;
 }

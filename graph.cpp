@@ -12,6 +12,8 @@ class Graph {
         int degree(int);
         void print_graph(Graph *);
         void BFS(Graph*, int);
+        void DFS(Graph*, int);
+        void DFSUtil(Graph*, int, set<int>);
         Graph() { initialize_graph(); }
         ~Graph() {}
         void initialize_graph();
@@ -101,8 +103,26 @@ void Graph::BFS(Graph *g, int start) {
     }
 
     cout << endl;
+}
 
+void Graph::DFSUtil(Graph *g, int start, set<int> visited) {
+    visited.insert(start);
+    cout << start << " ";
+    edge_node* node = g->edges[start];
+    while (node != nullptr) {
+        int dest = node->destination;
+        if (visited.find(dest) == visited.end()) {
+            DFSUtil(g, dest, visited);
+        }
+        node = node->next;
+    }
+}
 
+void Graph::DFS(Graph *g, int start) {
+    cout << "Graph Traversal DFS (Start = " << start << ")" << endl;
+    set<int> visited;
+    DFSUtil(g, start, visited);
+    cout << endl;
 }
 
 int main() {
@@ -118,6 +138,8 @@ int main() {
     g->print_graph(g);
     g->BFS(g,1);
     g->BFS(g,3);
+    g->DFS(g, 1);
+    g->DFS(g, 3);
 
     return 0;
 }

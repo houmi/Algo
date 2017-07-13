@@ -4,17 +4,17 @@
 
 using namespace std;
 
-char* findPrev(const char* start, char* ptr) {
+const char* findPrev(const char* start, const char* ptr) {
     
     if (ptr == start) {
         return nullptr;
     } else if (ptr-1 == start) {
-        return(ptr-1);
+        return ptr-1;
     } else if (!(*(ptr-2) & 0x80)) {
-        return(ptr-1);
+        return ptr-1;
     } 
 
-    char * cur = ptr-2;
+    const char * cur = ptr-2;
     int count=0;
     while (cur > start) {
         count++;
@@ -25,13 +25,13 @@ char* findPrev(const char* start, char* ptr) {
     }
 
     if (count %2 == 0) {
-        return (ptr-2);
+        return ptr-2;
     } else {
-        return (ptr-1);
+        return ptr-1;
     }    
 }
 
-printRes(char* start, char* ptr, char* res) {
+printRes(const char* start, const char* ptr, const char* res) {
      if (res) {
         printf("previous character from %c (index=%d) is %c (index = %d)\n", *ptr, ptr-start, *res, res-start);
     } else {
@@ -44,7 +44,7 @@ int main() {
     
     char str[100] = "ΦβabβΦcdΣefg";
     printf("%s\n",str);
-    char* start = str;
+    const char* start = str;
     while (*start != '\0') {
         if ((*start & 0x80) != 0) {
             cout << *start << " : ";
@@ -61,8 +61,8 @@ int main() {
         }
     }
     
-    char* ptr = str+5;
-    char* res = findPrev(str, ptr);
+    const char* ptr = str+5;
+    const char* res = findPrev(str, ptr);
     printRes(str, ptr, res);
    
     ptr = str;

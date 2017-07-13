@@ -6,19 +6,29 @@ using namespace std;
 
 char* findPrev(const char* start, char* ptr) {
     
-    char* res = nullptr;
     if (ptr == start) {
-        res = nullptr;
+        return nullptr;
     } else if (ptr-1 == start) {
-        res = ptr-1;
+        return(ptr-1);
     } else if (!(*(ptr-2) & 0x80)) {
-        res = ptr-1;
-    } else {
-        res = ptr-2;
+        return(ptr-1);
+    } 
+
+    char * cur = ptr-2;
+    int count=0;
+    while (cur > start) {
+        count++;
+        cur--;
+        if (!(*cur & 0x80)) {
+            break;
+        }
     }
-    
-    return res;
-    
+
+    if (count %2 == 0) {
+        return (ptr-2);
+    } else {
+        return (ptr-1);
+    }    
 }
 
 printRes(char* start, char* ptr, char* res) {

@@ -17,14 +17,11 @@ struct RandomListNode {
 
 void insert(node** root, int key) {
     node* temp = new node(key);
-
-    if (*root == nullptr) {
-        *root = temp;
-    } else {
-        temp->next = *root;
-        *root = temp;
-    }
+    temp->next = *root;
+    *root = temp;
 }
+
+
 
 void insertLast(node** root, int key) {
     node *temp = new node(key);

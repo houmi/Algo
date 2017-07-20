@@ -41,6 +41,21 @@ void printall(vector<vector<int>> res) {
     }
 }
 
+int knapSack(vector<int> val, vector<int> weight, int n, int totalW) {
+    if (n == 0 || totalW == 0) {
+        return 0;
+    }
+
+    if (weight[n-1] > totalW) {
+        return (val, weight, n-1, totalW);
+    }
+
+    return max( val[n-1] ,
+        knapSack(val, weight, n-1, totalW) + 
+        knapSack(val, weight, n-1, totalW-weight[n-1]));
+
+}
+
 int main() {
 
     vector<vector<int>> res;
@@ -55,6 +70,12 @@ int main() {
     vector<int> nums = { 1, 2, 3};
     permutations(res, nums, 0);
     printall(res);
+
+    vector<int> val = {3, 6, 7, 9, 11, 18};
+    vector<int> weight = {1, 2, 3, 5, 6, 8};
+    int ret = knapSack(val, weight, 6, 15);
+    cout << ret << endl;
+
    
     return 0;
 }

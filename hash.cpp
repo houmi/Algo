@@ -60,7 +60,8 @@ long long HashTable::hashfunc(string key) {
     vector<int> arr = {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101};
     long long hash = 1;
     for (int i=0, len=key.size();i<len;i++) {
-        hash *=hash * arr[key[i]-'0'];
+        int index = (tolower(key[i]) -'0') % arr.size();
+        hash *= arr[index];
     }
     return hash;
 
@@ -77,6 +78,7 @@ string HashTable::get(HashTable *ht, string key) {
             entry = entry->next;
         } else {
             value = entry->getValue();
+            break;
         }
     }
     
@@ -87,23 +89,27 @@ void HashTable::put(HashTable* ht, string key, string value) {
     long long hash = hashfunc(key);
     int index = (hash % 1000);
     hashentry *entry = new hashentry(key, value);
-    hashentry *cur = ht->table[index];
-    if (cur == nullptr) {
-        cur = entry;
-    } else { //TBD case where key value already there i.e. duplicates
-        entry->next = cur;
-        cur = entry;
-    }
+    entry->next = ht->table[index];
+    ht->table[index] = entry;
+    //TBD case where key value already there i.e. duplicates
 }
 
 int main() {
-    HashTable *ht;
+    HashTable *ht = new HashTable;
     vector<pair<string,string>> names = { {"Javier", "Arevalo"},{"Houman", "Ghahremanlou" }, {"JCAB", "Arevalo"}};
     for (auto name : names) {
         ht->put(ht, name.first, name.second);
     }
 
     string name = "Javier";
+    cout << name << ": " << ht->get(ht, name) << endl;
+
+
+    name = "Noob";
+    cout << name << ": " << ht->get(ht, name) << endl;
+
+
+    name = "Houman";
     cout << name << ": " << ht->get(ht, name) << endl;
 
     return 0;

@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
 
-
-
 using namespace std;
 
 void permutations(vector<vector<int>> &res, vector<int> nums, int begin) {
@@ -32,8 +30,9 @@ void combinations(vector<vector<int>> &res, vector<int> sol, int pos, int n, int
 
 }
 
-void printall(vector<vector<int>> res) {
-     for (auto v : res) {
+void printvec2d(vector<vector<int>> res, string title) {
+    cout << title << endl;
+    for (auto v : res) {
         for (auto num : v) {
             cout << num << " ";
         }        
@@ -41,40 +40,52 @@ void printall(vector<vector<int>> res) {
     }
 }
 
+void printvec(vector<int> res, string title) {
+    cout << title << endl;
+    for (auto num: res) {
+        cout << num << " ";
+    }
+    cout << endl;
+}
+
 int knapSack(vector<int> val, vector<int> weight, int n, int totalW) {
     if (n == 0 || totalW == 0) {
         return 0;
     }
 
-    if (weight[n-1] > totalW) {
-        return (val, weight, n-1, totalW);
+    int result;
+
+    if (weight[n] > totalW) {
+        result =  knapSack(val, weight, n-1, totalW);
+    } else {
+        int tmp1 = val[n] + knapSack(val, weight, n-1, totalW-weight[n]);
+        int tmp2 = knapSack(val, weight, n-1, totalW);
+        result = max(tmp1, tmp2);
     }
-
-    return max( val[n-1] ,
-        knapSack(val, weight, n-1, totalW) + 
-        knapSack(val, weight, n-1, totalW-weight[n-1]));
-
+    return result;
 }
 
 int main() {
 
     vector<vector<int>> res;
     vector<int> sol;
-    cout << "Combinations (n,k): n=4, k=2" << endl;
     combinations(res, sol, 1, 4, 2);
-    printall(res);
+    printvec2d(res, "Combinations (n,k): n=4, k=2" );
     cout << endl;
 
     res.clear();
-    cout << "Permutations of array 1 2 3" << endl;
     vector<int> nums = { 1, 2, 3};
     permutations(res, nums, 0);
-    printall(res);
+    printvec2d(res, "Permutations of array 1 2 3");
+    cout << endl;
 
-    vector<int> val = {3, 6, 7, 9, 11, 18};
-    vector<int> weight = {1, 2, 3, 5, 6, 8};
-    int ret = knapSack(val, weight, 6, 15);
-    cout << ret << endl;
+    cout << "Knapsack" << endl;
+    vector<int> val = {0, 60, 100, 120};
+    vector<int> weight = {0, 10, 20, 30 };
+    printvec(val, "Cost values:");
+    printvec(weight, "Weight values:");
+    int ret = knapSack(val, weight, 3, 50);
+    cout << "Total cost: " << ret << endl;
 
    
     return 0;

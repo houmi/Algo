@@ -118,6 +118,37 @@ bool isWord(node* root, string word) {
     }
 }
 
+bool haswords_gen(node* root, string str, int i, int j, int len, string word, vector<string> &list) {
+    if (j == len) {
+        list.push_back(word);
+        return true;
+    }
+
+    for (int i=j; i<len;i++) {
+        word = str.substr(i,j);
+        if (isWord(root, word)) {
+            list.push_back(word);
+            return(haswords_gen(root, str,i+1,j+2,len, word, list));
+            list.pop_back();
+        }
+        if (isPrefix(root, word)) {
+            continue;
+        }
+
+        return false;
+    }
+
+    return false;
+}
+
+
+bool hasWords(node* root, string str, vector<string> &list) {
+    string word;
+    haswords_gen(root, str, 0, 1, str.size()-1, word, list);
+    return (!list.empty());
+
+}
+
 
 int main() {
     node* trie = getnode();       
@@ -142,6 +173,11 @@ int main() {
     cout << "autocomplete for gr" << endl;
     key = "gr";
     autocomplete(trie, key);
+
+    key = "bedbathandbeyond";
+    vector<string> list;
+    hasWords(trie, key, list);
+
 
     return 0;
 }

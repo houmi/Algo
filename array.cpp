@@ -68,7 +68,7 @@ void maximumSubarray(vector<int> arr) {
 
 void merge(vector<int> &arr, int low, int middle, int high) {
     vector<int> aux(arr);
-    int i=low, j = middle+1, k = 0;
+    int i=low, j = middle+1;
 
     for (int k=low; k<=high;k++) {
         if (i>middle) {  

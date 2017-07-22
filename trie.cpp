@@ -44,8 +44,9 @@ void printall(node *root, string prefix="") {
     helperprint(root, words, word);
 
     for (auto word : words) {
-        cout << prefix << word << endl;
+        cout << prefix << word << " ";
     }
+    cout << endl;
 
     
 }
@@ -91,12 +92,36 @@ void autocomplete(node* root, string word) {
     }
 }
 
+bool isPrefix(node* root, string word) {
+    node * res = findstring(root, word);
+    if (res == nullptr) {
+        return false;
+    }
+    if (!res->isWord) {
+        return true;
+    } else {
+        return false;
+    }
 
+}
+
+bool isWord(node* root, string word) {
+    node * res = findstring(root, word);
+    if (res == nullptr) {
+        return false;
+    }
+
+    if (res->isWord) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 int main() {
     node* trie = getnode();       
-    vector<string> str = {"no", "noob", "max", "man", "mix", "grooming", "groom"};
+    vector<string> str = {"be", "bed", "bath", "and", "hand", "beyond", "no", "noob", "max", "man", "mix", "grooming", "groom"};
     for (auto s:str) {
        insert(trie, s);
     }

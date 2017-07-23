@@ -118,24 +118,27 @@ bool isWord(node* root, string word) {
     }
 }
 
-bool haswords_gen(node* root, string str, int i, int j, int len, string word, vector<string> &list) {
-    if (j == len) {
+bool haswords_gen(node* root, string str, int begin, int len, string word, vector<string> &list) {
+    if (begin == len) {
         list.push_back(word);
         return true;
     }
 
-    for (int i=j; i<len;i++) {
-        word = str.substr(i,j);
-        if (isWord(root, word)) {
-            list.push_back(word);
-            return(haswords_gen(root, str,i+1,j+2,len, word, list));
-            list.pop_back();
-        }
-        if (isPrefix(root, word)) {
-            continue;
-        }
+    for (int i=begin; i<len;i++) {
+        for (int j=i; j<len;j++) {
+            word = str.substr(i,j);
+            if (isWord(root, word)) {
+                cout << "isWord: " << word << endl;
+                list.push_back(word);
+                return(haswords_gen(root, str,j+1, len, word, list));
+                list.pop_back();
+            }
+            if (isPrefix(root, word)) {
+                cout << "isPrefix: " << word << endl;
+                continue;
+            }
 
-        return false;
+        }
     }
 
     return false;
@@ -144,7 +147,7 @@ bool haswords_gen(node* root, string str, int i, int j, int len, string word, ve
 
 bool hasWords(node* root, string str, vector<string> &list) {
     string word;
-    haswords_gen(root, str, 0, 1, str.size()-1, word, list);
+    haswords_gen(root, str, 0, str.size()-1, word, list);
     return (!list.empty());
 
 }
@@ -152,7 +155,7 @@ bool hasWords(node* root, string str, vector<string> &list) {
 
 int main() {
     node* trie = getnode();       
-    vector<string> str = {"be", "bed", "bath", "and", "hand", "beyond", "no", "noob", "max", "man", "mix", "grooming", "groom"};
+    vector<string> str = {"at", "be", "bed", "bat", "than", "bath", "and", "hand", "beyond", "no", "noob", "max", "man", "mix", "grooming", "groom"};
     for (auto s:str) {
        insert(trie, s);
     }
@@ -174,9 +177,17 @@ int main() {
     key = "gr";
     autocomplete(trie, key);
 
-    key = "bedbathandbeyond";
+    key = "bedbathandbeyond: ";
     vector<string> list;
-    hasWords(trie, key, list);
+    bool ret = hasWords(trie, key, list);
+    if (ret) {
+        for (auto word : list) {
+            cout << word << " ";
+        }
+        cout << endl;
+    } else {
+        cout << "N/A" << endl;
+    }
 
 
     return 0;

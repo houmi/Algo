@@ -118,37 +118,34 @@ bool isWord(node* root, string word) {
     }
 }
 
-bool haswords_gen(node* root, string str, int begin, int len, string word, vector<string> &list) {
+void haswords_gen(node* root, string str, int begin, int len, string word, vector<string> list, vector<vector<string>>& lists) {
     if (begin == len) {
-        list.push_back(word);
-        return true;
+        lists.push_back(list);
+        return;
     }
 
     for (int i=begin; i<len;i++) {
-        for (int j=i; j<len;j++) {
+        for (int j=1; j<=len-i;j++) {    
             word = str.substr(i,j);
             if (isWord(root, word)) {
-                cout << "isWord: " << word << endl;
                 list.push_back(word);
-                return(haswords_gen(root, str,j+1, len, word, list));
+                haswords_gen(root, str,i+j, len, word, list, lists);
                 list.pop_back();
-            }
-            if (isPrefix(root, word)) {
-                cout << "isPrefix: " << word << endl;
+            } else if (isPrefix(root, word)) {
                 continue;
+            } else {
+                return;
             }
-
         }
     }
-
-    return false;
 }
 
 
-bool hasWords(node* root, string str, vector<string> &list) {
+bool hasWords(node* root, string str, vector<vector<string>>& lists) {
     string word;
-    haswords_gen(root, str, 0, str.size()-1, word, list);
-    return (!list.empty());
+    vector<string> list;
+    haswords_gen(root, str, 0, str.size(), word, list, lists);
+    return (!lists.empty());
 
 }
 
@@ -177,12 +174,16 @@ int main() {
     key = "gr";
     autocomplete(trie, key);
 
-    key = "bedbathandbeyond: ";
-    vector<string> list;
-    bool ret = hasWords(trie, key, list);
+    key = "bedbathandbeyond";
+    cout << "Find Words in " << key << ": " << endl;
+    vector<vector<string>> lists;
+    bool ret = hasWords(trie, key, lists);
     if (ret) {
-        for (auto word : list) {
-            cout << word << " ";
+        for (auto list : lists) {
+            for (auto words: list) {
+                cout << words << " ";
+            }
+            cout << endl;
         }
         cout << endl;
     } else {

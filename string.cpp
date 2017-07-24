@@ -151,6 +151,47 @@ void balanceParenthesis(string str) {
     
 }
 
+string zigzag(string s, int numRows) {
+    if (numRows >= s.size()) {
+        return s;
+    }
+
+    if (numRows <= 1) {
+        return s;
+    }
+
+    int start = 0;
+    int end = s.size();
+    vector<string> v(numRows+1,"");
+    
+    int index = 0;
+    bool up = true;
+    
+    while (start < end) {
+        v[index].push_back(s[start++]);
+
+        if (up && index== numRows-1) {
+            index--;
+            up = false;
+        } else if (!up && index == 0) {
+            index++;
+            up = true;
+        } else if (up) {
+            index++;
+        } else {
+            index--;
+        }
+    }
+
+    string res;
+    for (auto s : v) {
+        res += s;
+    }
+    
+    return res;
+    
+}
+
 int main() {
 
     string s = "         THis is a test        blablabla                crap";
@@ -170,6 +211,9 @@ int main() {
     balanceParenthesis("(v()()()");
     balanceParenthesis("(()(()(()(");
     balanceParenthesis("))))))))))))))()()");
+
+    s = "PAYPALISHIRING";
+    cout << "Zigzag of " << s << " in 3 rows is: " << zigzag(s, 3) << endl;
 
     return 0;
 }

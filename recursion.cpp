@@ -16,6 +16,20 @@ void permutations(vector<vector<int>> &res, vector<int> nums, int begin) {
     }
 }
 
+void permutations(vector<string> &res, string letters, int begin) {
+    if (begin == letters.size()) {
+        res.push_back(letters);
+        return;
+    }
+    
+    for (int i=begin; i<letters.size();i++) {
+        swap(letters[i], letters[begin]);
+        permutations(res,letters,begin+1);
+        swap(letters[i], letters[begin]);
+    }
+}
+
+
 void combinations(vector<vector<int>> &res, vector<int> sol, int pos, int n, int k) {
     if (k==0) {
         res.push_back(sol);
@@ -78,6 +92,17 @@ int main() {
     permutations(res, nums, 0);
     printvec2d(res, "Permutations of array 1 2 3");
     cout << endl;
+
+    string str = "ABC";
+    vector<string> res2;
+    permutations(res2, str, 0);
+    cout << "Permutations of " << str << endl;
+    for (auto s : res2) {
+        cout << s << endl;
+    }
+    cout << endl;
+
+    
 
     cout << "Knapsack" << endl;
     vector<int> val = {0, 60, 100, 120};

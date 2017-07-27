@@ -80,6 +80,8 @@ void parenHelper(int left, int right, const string& result, vector<string>& solu
 
 }
 
+// generate all matched parenthesis for n
+// i.e for 2 return ()() and (())
 void parenthesis(int n) {
     cout << "Generate strings of matched parens for n=" << n << endl;
     vector<string> solution;
@@ -108,6 +110,9 @@ bool isValidString(string str) {
 
 }
 
+// given a string with parenthesis and letters/number, return the correct
+// parenthesis format (don't go any lower in #s)
+// i.e : ())a)() could return  ()a() and (a)()
 void balanceParenthesis(string str) {
     queue<string> strList;
     set<string> visitedStr;
@@ -211,6 +216,7 @@ int main() {
     balanceParenthesis("(v()()()");
     balanceParenthesis("(()(()(()(");
     balanceParenthesis("))))))))))))))()()");
+    balanceParenthesis("())a)()");
 
     s = "PAYPALISHIRING";
     cout << "Zigzag of " << s << " in 3 rows is: " << zigzag(s, 3) << endl;

@@ -21,6 +21,7 @@ void printArray(vector<int> arr, bool print = true) {
 
 }
 
+// find pairs in array that add up to k
 void findPairSum(vector<int> arr, int k) {
     unordered_set<int> set;
 
@@ -36,6 +37,7 @@ void findPairSum(vector<int> arr, int k) {
     }
 }
 
+// remove dups from array
 void removeDuplicates(vector<int> arr) {
     cout << "Remove Dups" << endl;
     vector<int> arr2(arr);
@@ -52,6 +54,7 @@ void removeDuplicates(vector<int> arr) {
     printArray(arr2, false);
 }
 
+// find maximum sum in sub-array in the array
 void maximumSubarray(vector<int> arr) {
     cout << "Maximum Sub-array: ";
     int curSum = 0;
@@ -131,6 +134,7 @@ void quicksort(vector<int> arr) {
 }
 
 
+// find freq of numbers in the array
 void frequency(vector<int> arr) {
     cout << "Number:Frequency" << endl;
     map<int,int> freq;

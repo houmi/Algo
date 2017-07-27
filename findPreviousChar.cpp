@@ -4,6 +4,16 @@
 
 using namespace std;
 
+// based on a multi-byte string, if the first byte has the high bit set
+// then the character is two bytes, otherwise is one byte
+//
+// move next is: given a char ptr, if the high bit is set, return
+// ptr+2, otherwise return ptr+1
+// 
+// Question: if we're given inputs to a ptr to the current character in
+// the string and a ptr to the beginning of string, implement move previous
+//
+// Note: current pointer is guaranteed to be valid
 const char* findPrev(const char* start, const char* ptr) {
     
     if (ptr == start) {

@@ -96,20 +96,20 @@ void HashTable::put(HashTable* ht, string key, string value) {
 
 int main() {
     HashTable *ht = new HashTable;
-    vector<pair<string,string>> names = { {"Javier", "Arevalo"},{"Houman", "Ghahremanlou" }, {"JCAB", "Arevalo"}};
+    vector<pair<string,string>> names = { {"USA", "Washington DC"},{"France", "Paris" }, {"UK", "London"}};
     for (auto name : names) {
         ht->put(ht, name.first, name.second);
     }
 
-    string name = "Javier";
+    string name = "France";
     cout << name << ": " << ht->get(ht, name) << endl;
 
 
-    name = "Noob";
+    name = "Germany";
     cout << name << ": " << ht->get(ht, name) << endl;
 
 
-    name = "Houman";
+    name = "UK";
     cout << name << ": " << ht->get(ht, name) << endl;
 
     return 0;

@@ -140,7 +140,9 @@ void haswords_gen(node* root, string str, int begin, int len, string word, vecto
     }
 }
 
-
+// based on a string that has words concatened, return the list of words that can be assembled into that
+// string.
+// i.e bedbathandbeyond returns : bad bath and beyond , bed bat hand beyond
 bool hasWords(node* root, string str, vector<vector<string>>& lists) {
     string word;
     vector<string> list;

@@ -5,6 +5,8 @@
 
 using namespace std;
 
+// given schedules for trucks at a warehouse, where each schedule has the start, end time
+// find the maximum of warehouse doors that need to be operated during a particula day
 int findMaxDoors(vector<pair<double,double>> sched) {
 
     using schedule = pair<double,double>;

@@ -134,6 +134,32 @@ bool isPalindrome(node* root) {
     return true;    
 }
 
+node* mergesortedlist(node* l1, node* l2) {
+    cout << "Merging Lists" << endl;
+    print(l1);
+    print(l2);
+    node res = node(0);
+    node* cur = &res;
+    while (l1 && l2) {
+        if (l1->val < l2->val) {
+            cur->next = l1;
+            l1 = l1->next;
+        } else {
+            cur->next = l2;
+            l2 = l2->next;
+        }
+        cur = cur->next;
+    }
+    if (l1) {
+        cur->next = l1;
+    }
+    if (l2) {
+        cur->next = l2;
+    }
+
+    return res.next;
+
+}
 
 
 
@@ -171,6 +197,22 @@ int main() {
     } else {
         cout << "List isn't Palindrom" << endl;
     }
+
+
+    vector<int> a1 = {5, 3, 1};
+    vector<int> a2 = {8, 6, 4, 2};
+    node* l1 = nullptr;
+    node* l2 = nullptr;
+    node* l3 = nullptr;
+    for (auto num: a1) {
+        insert(&l1, num);
+    }
+    for (auto num: a2) {
+        insert(&l2, num);
+    }
+    l3 = mergesortedlist(l1, l2);
+    print(l3);
+
 
     return 0;
 }

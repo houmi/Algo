@@ -6,7 +6,7 @@ Here are codes I wrote for some of the questions from my different interviews as
 
 [Leetcode](http://www.leetcode.com)
 
-[Geeks for Geeks](http://www.geeksforgeeks.com)
+[Geeks for Geeks](http://www.geeksforgeeks.org)
 
 #### Codes/Questions covered:
 - array.cpp

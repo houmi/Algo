@@ -4,9 +4,9 @@ Here are codes I wrote for some of the questions from my different interviews as
 
 [Elements of Programming Interviews](https://www.amazon.com/Elements-Programming-Interviews-Adnan-Aziz/dp/1479274836/ref=zg_bsnr_2576_5)
 
-[Leetcode](www.leetcode.com)
+[Leetcode](http://www.leetcode.com)
 
-[Geeks for Geeks](www.geeksforgeeks.com)
+[Geeks for Geeks](http://www.geeksforgeeks.com)
 
 #### Codes/Questions covered:
 - array.cpp

@@ -27,6 +27,9 @@ Here are codes I wrote for some of the questions from my different interviews as
 
 - maze.cpp
   - simple maze traversal, find number of paths as well as finding a path + memorization
+  
+- nqueen.cpp
+  - classic chess problem / finding the number of different valid queens placements on a chessboard of n size
 
 - recursion.cpp
   - recursion/backtracking problems: combinations/permutations, knapsack, 

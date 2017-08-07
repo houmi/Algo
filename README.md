@@ -10,7 +10,7 @@ Here are codes I wrote for some of the questions from my different interviews as
 
 #### Codes/Questions covered:
 - array.cpp
-  - general C++ Vector with findPairsSum(), RemoveDuplicates(), findMaximumSubarray(), findFrequency Merge & Quicksort implementations.
+  - general C++ Vector with findPairsSum(), RemoveDuplicates(), findMaximumSubarray(), findFrequency() and Merge / Quicksort implementations.
 
 - findPrevious.cpp
   - interview question

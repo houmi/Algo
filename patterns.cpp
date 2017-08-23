@@ -122,7 +122,7 @@ int main() {
 
     assert( wordPattern2("abba", "redbluebluered") == true);
     assert( wordPattern2("aaaa", "asdasdasdasd") == true);
-    assert( wordPattern2("aba", "xyzxyzxyz") == false);
+    assert( wordPattern2("aba", "xyzxyzxyz") == false );
 
     return 0;
 }

@@ -18,6 +18,9 @@ Here are codes I wrote for some of the questions from my different interviews as
 - graph.cpp
   - Graph implementation using adjacency list and basic DFS/BFS traversal
 
+- findkthnum.cpp
+  - based on two sorted array, return kth number (brute force + optimized)
+
 - hash.cpp
   - basic hashtable implementation of string -> string (country/Capital)
 

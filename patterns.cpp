@@ -7,6 +7,8 @@
 #include <iterator>
 #include <assert.h>
 
+#include "log.h"
+
 using namespace std;
 
 
@@ -54,12 +56,12 @@ bool IsMatch(string pattern, int i, string str, int j, unordered_set<string> vis
     int p = pattern.size();
     int q = str.size();
     if (i == p && j == q) {
-        cout << "Done." << endl;
+        FILE_LOG(logDEBUG) << "Done.";
         return true;
     }
 
     if (i == p || j == q) {
-        cout << "only one index reached end." << endl;
+        FILE_LOG(logERROR) << "only one index reached end.";
         return false;
     }
 
@@ -67,10 +69,10 @@ bool IsMatch(string pattern, int i, string str, int j, unordered_set<string> vis
 
     if (m.count(ch)) {
         string s = m[ch];
-        cout << "matching " << ch << " with " << s << endl;
+        FILE_LOG(logDEBUG) << "matching " << ch << " with " << s;
         string t = str.substr(j,s.size());
         if (s != t) {
-            cout << "matching returns false, expected: " << s << " got: " << t << endl;
+            FILE_LOG(logERROR) << "matching returns false, expected: " << s << " got: " << t;
             return false;
         }
         return IsMatch(pattern, i+1, str, j+s.size(), visited, m);
@@ -78,26 +80,26 @@ bool IsMatch(string pattern, int i, string str, int j, unordered_set<string> vis
     
     for (int k=j; k<str.size(); k++) {
         string s = str.substr(j, k-j+1);
-        cout << "using string " << s << " for pattern " << ch << endl;
+        FILE_LOG(logDEBUG) << "using string " << s << " for pattern " << ch;
         if (visited.count(s)) {
-           cout << "already seen " << s << " continue!" << endl;
+            FILE_LOG(logDEBUG) << "already seen " << s << " continue!";
            continue;
         }
 
         m[ch] = s;
         visited.insert(s);
-        cout << "adding " << ch << "->" << s << endl;
+        FILE_LOG(logDEBUG) << "adding " << ch << "->" << s;;
         if (IsMatch(pattern, i+1, str, k+1, visited, m)) {
             return true;
         }
 
-        cout << "removing " << ch << "->" << s << endl;
+        FILE_LOG(logDEBUG) << "removing " << ch << "->" << s;
         m.erase(ch);
         visited.erase(s);
 
     }
 
-    cout << "Nada..." << endl;
+    FILE_LOG(logERROR) << "Nada...";
     return false;
 }
 

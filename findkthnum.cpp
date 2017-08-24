@@ -67,8 +67,8 @@ int findKthBruteForce2(vector<int> a, vector<int> b, int k) {
 int main() {
     vector<int> a = {1, 3, 5, 7, 9};
     vector<int> b = {2, 4, 6, 8, 10, 12, 14};
-    assert (findKthBruteForce(a, b, 5) == 6);
-    assert (findKthBruteForce2(a, b, 5) == 6);
+    assert (findKthBruteForce(a, b, 6) == 7);
+    assert (findKthBruteForce2(a, b, 6) == 7);
 
 
     return 0;

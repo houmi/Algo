@@ -1,13 +1,3 @@
-### Algorithm/DS Codes
-
-Here are codes I wrote for some of the questions from my different interviews as well as questions I found on EPI book as well as different online sites:
-
-[Elements of Programming Interviews](https://www.amazon.com/Elements-Programming-Interviews-Adnan-Aziz/dp/1479274836/ref=zg_bsnr_2576_5)
-
-[Leetcode](http://www.leetcode.com)
-
-[Geeks for Geeks](http://www.geeksforgeeks.org)
-
 #### Codes/Questions covered:
 - array.cpp
   - general C++ Vector with findPairsSum(), RemoveDuplicates(), findMaximumSubarray(), findFrequency() and Merge / Quicksort implementations.

@@ -2,18 +2,19 @@
 #include <vector>
 #include <queue>
 #include <set>
+#include <memory>
 
 using namespace std;
 
 class Graph {
     public:
         
-        void add_edge(Graph *, int, int, bool);
+        void add_edge(shared_ptr<Graph>, int, int, bool);
         int degree(int);
-        void print_graph(Graph *);
-        void BFS(Graph*, int);
-        void DFS(Graph*, int);
-        void DFSUtil(Graph*, int, set<int>);
+        void print_graph(shared_ptr<Graph>);
+        void BFS(shared_ptr<Graph>, int);
+        void DFS(shared_ptr<Graph>, int);
+        void DFSUtil(shared_ptr<Graph>, int, set<int>);
         Graph() { initialize_graph(); }
         ~Graph() {}
         void initialize_graph();
@@ -27,7 +28,7 @@ class Graph {
         struct edge_node {
             int destination;
             int weight;
-            edge_node *next;
+            shared_ptr<edge_node> next;
             edge_node(int dest, int weight): destination(dest), weight(weight), next(nullptr) {}
         };
 
@@ -35,7 +36,7 @@ class Graph {
         int numVertices;
         bool directed;
 
-        edge_node *edges[1001];
+        shared_ptr<edge_node> edges[1001];
         int degrees[1001];
 
 
@@ -54,8 +55,8 @@ void Graph::initialize_graph() {
 
 }
 
-void Graph::add_edge(Graph *g, int v, int w, bool directed = true) {
-    edge_node *node = new edge_node(w, 0);
+void Graph::add_edge(shared_ptr<Graph> g, int v, int w, bool directed = true) {
+    auto node = make_shared<edge_node>(w, 0);
     
     node->next = g->edges[v];
     g->edges[v] = node; // insert at front
@@ -66,8 +67,8 @@ void Graph::add_edge(Graph *g, int v, int w, bool directed = true) {
     // if directed == false TBD add_edge(g, w, x, false)
 }
 
-void Graph::print_graph(Graph *g) {
-    edge_node *node = nullptr;
+void Graph::print_graph(shared_ptr<Graph> g) {
+    shared_ptr<edge_node> node = nullptr;
     for (int i=1, len = g->numVertices; i<=len ; ++i) {
         cout << i << ": ";
         node = g->edges[i];
@@ -79,7 +80,7 @@ void Graph::print_graph(Graph *g) {
     }
 }
 
-void Graph::BFS(Graph *g, int start) {
+void Graph::BFS(shared_ptr<Graph> g, int start) {
     queue<int> Q;
     set<int> visited;
     
@@ -91,7 +92,7 @@ void Graph::BFS(Graph *g, int start) {
         int v = Q.front();
         Q.pop();
         cout << v << " ";
-        edge_node* node = g->edges[v];
+        auto node = g->edges[v];
         while (node !=nullptr) {
             int dest = node->destination;
             if (visited.find(dest) == visited.end()) {
@@ -105,10 +106,10 @@ void Graph::BFS(Graph *g, int start) {
     cout << endl;
 }
 
-void Graph::DFSUtil(Graph *g, int start, set<int> visited) {
+void Graph::DFSUtil(shared_ptr<Graph> g, int start, set<int> visited) {
     visited.insert(start);
     cout << start << " ";
-    edge_node* node = g->edges[start];
+    auto node = g->edges[start];
     while (node != nullptr) {
         int dest = node->destination;
         if (visited.find(dest) == visited.end()) {
@@ -118,7 +119,7 @@ void Graph::DFSUtil(Graph *g, int start, set<int> visited) {
     }
 }
 
-void Graph::DFS(Graph *g, int start) {
+void Graph::DFS(shared_ptr<Graph> g, int start) {
     cout << "Graph Traversal DFS (Start = " << start << ")" << endl;
     set<int> visited;
     DFSUtil(g, start, visited);
@@ -127,7 +128,7 @@ void Graph::DFS(Graph *g, int start) {
 
 int main() {
 
-    Graph *g = new Graph;
+    auto g = make_shared<Graph>();
     g->add_edge(g, 1, 2);
     g->add_edge(g, 2, 4);
     g->add_edge(g, 3, 2);
